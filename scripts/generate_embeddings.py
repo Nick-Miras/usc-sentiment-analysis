@@ -88,10 +88,10 @@ def main():
     print("=" * 70)
 
     # File paths
-
     input_file = "data/raw_data.csv"
-    output_embeddings_file = f"data/embeddings_{timestamp}.npy"
-    checkpoint_file = f"data/checkpoint_{timestamp}.pkl"
+    os.makedirs(f"data/{model_name}", exist_ok=True)
+    output_embeddings_file = f"data/{model_name}/embeddings_{timestamp}.npy"
+    checkpoint_file = f"data/{model_name}/checkpoint_{timestamp}.pkl"
 
 
     # Load data

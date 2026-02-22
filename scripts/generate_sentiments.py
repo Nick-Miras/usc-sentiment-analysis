@@ -1,10 +1,12 @@
 import pandas as pd
 from transformers import pipeline, Pipeline
 from datetime import datetime
+import os
 
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 DATA_FILE = 'data/raw_data.csv'
+MODEL_NAME = 'cardiffnlp/twitter-roberta-base-sentiment-latest'
 
 
 def retrieve_data() -> pd.DataFrame:
@@ -18,7 +20,7 @@ def get_model() -> Pipeline:
     print("Loading sentiment analysis model...")
     return pipeline(
         task='text-classification',
-        model='cardiffnlp/twitter-roberta-base-sentiment-latest'
+        model=MODEL_NAME
     )
 
 if __name__ == "__main__":
@@ -34,5 +36,6 @@ if __name__ == "__main__":
 
     df['sentiment'] = sentiments
     df['sentiment_confidence'] = sentiment_confidence
-    df.to_csv(f'data/sentiments_{timestamp}.csv', index=False)
+    os.makedirs(f'data/{MODEL_NAME}', exist_ok=True)
+    df.to_csv(f'data/{MODEL_NAME}/sentiments_{timestamp}.csv', index=False)
     print(f"Sentiment analysis completed and saved to data/sentiments_{timestamp}.csv")
