@@ -15,12 +15,17 @@ model_name = 'cardiffnlp/twitter-roberta-base-sentiment-latest'
 
 
 def get_model():
-    """Load Transformer Model"""
-    return SentenceTransformer(model_name)
+    """Load Transformer Model with left truncation"""
+    model = SentenceTransformer(model_name)
+    model.tokenizer.truncation_side = 'left'
+    return model
+
 
 def get_tokenizer():
     """Load Tokenizer"""
-    return AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer.truncation_side = 'left'
+    return tokenizer
 
 
 def save_checkpoint(embeddings, batch_idx, checkpoint_file):

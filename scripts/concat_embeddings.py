@@ -3,18 +3,20 @@ import numpy as np
 import os
 import glob
 
+model_name = 'cardiffnlp/twitter-roberta-base-sentiment-latest'
+
 def main():
     print("=" * 70)
     print("CONCATENATE EMBEDDINGS AND RAW DATA")
     print("=" * 70)
     
     # Find the latest .npy file in data/
-    npy_files = glob.glob("data/bert_embeddings_*.npy")
+    npy_files = glob.glob(f"data/{model_name}/embeddings_*.npy")
     if not npy_files:
         print("ERROR: No .npy embeddings file found in data/")
         return
 
-    sentiments_files = glob.glob("data/sentiments_*.csv")
+    sentiments_files = glob.glob(f"data/{model_name}/sentiments_*.csv")
     latest_sentiment_file = max(sentiments_files, key=os.path.getmtime)
     
     # Sort by modification time to get the latest
